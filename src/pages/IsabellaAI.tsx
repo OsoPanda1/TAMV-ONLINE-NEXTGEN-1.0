@@ -81,9 +81,12 @@ export default function IsabellaAI() {
 
           <div>
             <h2 className="text-3xl font-serif">ISABELLA MATRIZ</h2>
-            <p className={`text-xs font-mono uppercase tracking-widest ${systemMode === SystemMode.NORMAL ? 'text-tamv-blue' : 'text-tamv-amber'}`}>
-              {systemMode === SystemMode.NORMAL ? 'Núcleo Orquestador Activo' : 'Modo Restringido'}
-            </p>
+            <div className="flex items-center justify-center gap-2 mt-1">
+              <div className={`w-2 h-2 rounded-full ${systemMode === SystemMode.NORMAL ? 'bg-tamv-blue' : 'bg-tamv-amber'} animate-pulse`} />
+              <p className={`text-[10px] font-mono uppercase tracking-widest ${systemMode === SystemMode.NORMAL ? 'text-tamv-blue' : 'text-tamv-amber'}`}>
+                {systemMode === SystemMode.NORMAL ? 'Núcleo Orquestador Activo' : 'Modo Restringido (Throttled)'}
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4 pt-6 text-left">
@@ -194,6 +197,15 @@ export default function IsabellaAI() {
                     : 'bg-white/5 border border-white/10 text-white/90'
                 }`}>
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                  {msg.role === 'assistant' && activeAgents.length > 0 && i === messages.length - 1 && (
+                    <div className="mt-3 pt-3 border-t border-white/10 flex flex-wrap gap-2">
+                      {activeAgents.map(agentId => (
+                        <span key={agentId} className="text-[8px] font-mono bg-tamv-blue/10 text-tamv-blue px-1.5 py-0.5 rounded uppercase tracking-tighter">
+                          {agentId}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
