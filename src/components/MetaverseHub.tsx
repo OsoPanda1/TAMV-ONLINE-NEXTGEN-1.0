@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Float, MeshDistortMaterial, Sphere, Stars, Text, Float as FloatDrei } from "@react-three/drei";
+import { OrbitControls, Float, MeshDistortMaterial, Sphere, Stars, Text } from "@react-three/drei";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";

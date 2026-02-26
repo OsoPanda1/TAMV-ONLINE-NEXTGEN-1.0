@@ -1,3 +1,4 @@
+import * as React from "react";
 import { motion } from "framer-motion";
 import { 
   BookOpen, 
@@ -159,25 +160,25 @@ function MSRFeed() {
   const [records, setRecords] = React.useState<any[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
-  React.useEffect(() => {
-    const fetchRecords = async () => {
-      try {
-        const response = await fetch("/api/msr");
-        if (response.ok) {
-          const data = await response.json();
-          setRecords(data.reverse()); // Show newest first
-        }
-      } catch (e) {
-        console.error("Failed to fetch MSR records:", e);
-      } finally {
-        setIsLoading(false);
+  const fetchRecords = React.useCallback(async () => {
+    try {
+      const response = await fetch("/api/msr");
+      if (response.ok) {
+        const data = await response.json();
+        setRecords([...data].reverse()); // Show newest first
       }
-    };
+    } catch (e) {
+      console.error("Failed to fetch MSR records:", e);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
+  React.useEffect(() => {
     fetchRecords();
     const interval = setInterval(fetchRecords, 5000); // Poll every 5s
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchRecords]);
 
   if (isLoading) {
     return <div className="text-center py-8 text-white/20 font-mono text-xs uppercase animate-pulse">Sincronizando con Ledger...</div>;
