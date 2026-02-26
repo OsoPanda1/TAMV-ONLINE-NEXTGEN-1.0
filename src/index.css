@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Playfair Display", serif;
+
+  --color-tamv-blue: #00A3FF; /* Azul TAMV Primario */
+  --color-tamv-navy: #050B1A; /* Navy Digital Profundo */
+  --color-tamv-cyan: #00FFFF; /* Cian Suave Secundario */
+  --color-tamv-dark: #020408; /* Casi Negro */
+  --color-tamv-accent: #00FFFF;
+  --color-tamv-teal: #00FFCC;
+  --color-tamv-amber: #FFBF00;
+  --color-tamv-red: #FF4444;
+}
+
+@layer base {
+  body {
+    @apply bg-tamv-navy text-white font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight;
+  }
+}
+
+.tamvtrix-gradient {
+  background: radial-gradient(circle at 50% 30%, rgba(0, 71, 171, 0.2) 0%, transparent 60%),
+              radial-gradient(circle at 10% 80%, rgba(0, 255, 204, 0.1) 0%, transparent 50%);
+}
+
+.glass-panel {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
+}
+
+.cyber-border {
+  @apply border-l-2 border-tamv-accent pl-4;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

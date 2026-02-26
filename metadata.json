@@ -1,0 +1,5 @@
+{
+  "name": "TAMV ONLINE — MSR Civilizational Stack",
+  "description": "Unificación de los ecosistemas TAMV ONLINE y Genesis Digytamv Nexus. Una infraestructura digital digna, auditable y soberana que combina metaverso, blockchain y guardianía ética.",
+  "requestFramePermissions": ["camera", "microphone"]
+}
