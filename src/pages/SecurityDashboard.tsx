@@ -87,33 +87,49 @@ export default function SecurityDashboard() {
             <h3 className="absolute top-6 left-6 text-[10px] font-mono uppercase tracking-[0.3em] text-white/40">Escudo Civilizatorio</h3>
             
             <div className="relative w-full h-full flex items-center justify-center scale-90 md:scale-100">
-              {layers.map((layer, i) => (
-                <motion.div
-                  key={layer.id}
-                  onClick={() => setActiveLayer(layer.id)}
-                  className={`absolute rounded-full border cursor-pointer transition-all duration-700 flex items-center justify-center
-                    ${activeLayer === layer.id ? `${layer.border} bg-white/5 shadow-[0_0_30px_rgba(0,163,255,0.1)]` : "border-white/5 hover:border-white/20"}
-                  `}
-                  style={{
-                    width: `${100 - i * 12}%`,
-                    height: `${100 - i * 12}%`,
-                    zIndex: layers.length - i
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  {activeLayer === layer.id && (
-                    <motion.div 
-                      layoutId="active-ring"
-                      className="absolute inset-0 rounded-full border-2 border-tamv-blue/50 animate-pulse"
-                    />
-                  )}
-                  {i === layers.length - 1 && (
-                    <div className="flex flex-col items-center gap-2">
-                      <Hexagon className="w-10 h-10 text-tamv-blue animate-pulse" />
-                    </div>
-                  )}
-                </motion.div>
-              ))}
+              {layers.map((layer, i) => {
+                const isActive = activeLayer === layer.id;
+                return (
+                  <motion.div
+                    key={layer.id}
+                    onClick={() => setActiveLayer(layer.id)}
+                    initial={false}
+                    animate={{
+                      scale: isActive ? 1.05 : 0.95,
+                      opacity: isActive ? 1 : 0.4,
+                      borderColor: isActive ? "rgba(0, 163, 255, 0.5)" : "rgba(255, 255, 255, 0.05)",
+                      boxShadow: isActive ? "0 0 40px rgba(0, 163, 255, 0.2)" : "0 0 0px rgba(0, 0, 0, 0)",
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 30,
+                    }}
+                    className={`absolute rounded-full border cursor-pointer flex items-center justify-center transition-colors
+                      ${isActive ? "bg-white/5" : "hover:border-white/20"}
+                    `}
+                    style={{
+                      width: `${100 - i * 12}%`,
+                      height: `${100 - i * 12}%`,
+                      zIndex: layers.length - i
+                    }}
+                    whileHover={{ scale: isActive ? 1.08 : 0.98 }}
+                  >
+                    {isActive && (
+                      <motion.div 
+                        layoutId="active-ring"
+                        className="absolute inset-0 rounded-full border-2 border-tamv-blue/50 animate-pulse"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                    {i === layers.length - 1 && (
+                      <div className="flex flex-col items-center gap-2">
+                        <Hexagon className={`w-10 h-10 ${isActive ? "text-tamv-blue" : "text-white/20"} animate-pulse`} />
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
@@ -121,9 +137,10 @@ export default function SecurityDashboard() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeLayer}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
                 className="glass-panel p-8 h-full flex flex-col justify-between"
               >
                 <div>
