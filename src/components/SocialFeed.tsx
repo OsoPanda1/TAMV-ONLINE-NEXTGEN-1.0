@@ -20,13 +20,13 @@ import {
 import { Link } from "react-router-dom";
 
 export enum MSRDomain {
-  SOCIAL = "SOCIAL",
-  LEARN = "LEARN",
-  ECONOMY = "ECONOMY",
-  GOV = "GOV",
-  XR = "XR",
-  AI = "AI",
-  SECURITY = "SECURITY"
+  SOCIAL = "T-Social",
+  LEARN = "T-Learn",
+  ECONOMY = "T-Economy",
+  GOV = "T-Gov",
+  XR = "T-XR",
+  AI = "T-AI",
+  CORE = "T-Core"
 }
 
 export interface MSRCard {
@@ -44,6 +44,7 @@ export interface MSRCard {
   impact: {
     label: string;
     value: string;
+    type: string;
   };
   civilizationalScore: number; // 0-100, curated by Isabella
   timestamp: number;
@@ -57,7 +58,7 @@ const MOCK_EVENTS: MSRCard[] = [
     actor: { name: "Elena S.", role: "Aprendiz", avatar: "https://picsum.photos/seed/elena/100/100", idNvida: "did:tamv:nvida-772" },
     visualUrl: "https://picsum.photos/seed/learn1/800/600",
     content: "Completado el módulo de 'Ética en Sistemas Sentientes'. Una inmersión profunda en la responsabilidad del creador.",
-    impact: { label: "QuantumSeeds", value: "+150" },
+    impact: { label: "QuantumSeeds", value: "+150", type: "Educativo" },
     civilizationalScore: 95,
     timestamp: Date.now() - 1000 * 60 * 30
   },
@@ -68,7 +69,7 @@ const MOCK_EVENTS: MSRCard[] = [
     actor: { name: "Marco V.", role: "Arquitecto XR", avatar: "https://picsum.photos/seed/marco/100/100", idNvida: "did:tamv:nvida-104" },
     visualUrl: "https://picsum.photos/seed/xr1/800/600",
     content: "Nuevo espacio 'Códice Vivo' desplegado en el Nexus. Un entorno 4D para visualizar la historia de la soberanía.",
-    impact: { label: "Inmersión", value: "4.2h" },
+    impact: { label: "Inmersión", value: "4.2h", type: "Creativo" },
     civilizationalScore: 88,
     timestamp: Date.now() - 1000 * 60 * 120
   },
@@ -79,7 +80,7 @@ const MOCK_EVENTS: MSRCard[] = [
     actor: { name: "SCAO-04", role: "Federado", avatar: "https://picsum.photos/seed/scao/100/100", idNvida: "did:tamv:nvida-federated" },
     visualUrl: "https://picsum.photos/seed/econ1/800/600",
     content: "Liquidación de activos TCEP para el proyecto de reforestación digital. Transparencia total en el MSR.",
-    impact: { label: "Impacto", value: "High" },
+    impact: { label: "Impacto", value: "High", type: "Económico" },
     civilizationalScore: 92,
     timestamp: Date.now() - 1000 * 60 * 240
   },
@@ -90,7 +91,7 @@ const MOCK_EVENTS: MSRCard[] = [
     actor: { name: "Julian R.", role: "Ciudadano", avatar: "https://picsum.photos/seed/julian/100/100", idNvida: "did:tamv:nvida-991" },
     visualUrl: "https://picsum.photos/seed/social1/800/600",
     content: "Reflexión sobre la importancia de la huella MD-X4 en la construcción de una comunidad digna.",
-    impact: { label: "Votos", value: "1.2k" },
+    impact: { label: "Votos", value: "1.2k", type: "Social" },
     civilizationalScore: 82,
     timestamp: Date.now() - 1000 * 60 * 400
   },
@@ -101,7 +102,7 @@ const MOCK_EVENTS: MSRCard[] = [
     actor: { name: "Guardian-01", role: "Guardián", avatar: "https://picsum.photos/seed/guardian/100/100", idNvida: "did:tamv:nvida-master" },
     visualUrl: "https://picsum.photos/seed/gov1/800/600",
     content: "Propuesta de enmienda al Códice Maestro para fortalecer el Protocolo de Vergüenza de Isabella.",
-    impact: { label: "Consenso", value: "89%" },
+    impact: { label: "Consenso", value: "89%", type: "Gobernanza" },
     civilizationalScore: 98,
     timestamp: Date.now() - 1000 * 60 * 600
   }
@@ -114,13 +115,23 @@ const DOMAIN_CONFIG = {
   [MSRDomain.GOV]: { icon: Lock, color: "text-tamv-accent", bg: "bg-tamv-accent/10", border: "border-tamv-accent/20", label: "Capa Gobernanza", path: "/governance" },
   [MSRDomain.XR]: { icon: Globe, color: "text-tamv-cyan", bg: "bg-tamv-cyan/10", border: "border-tamv-cyan/20", label: "Capa XR", path: "/dreamspaces" },
   [MSRDomain.AI]: { icon: Cpu, color: "text-tamv-blue", bg: "bg-tamv-blue/10", border: "border-tamv-blue/20", label: "Capa IA", path: "/isabella" },
-  [MSRDomain.SECURITY]: { icon: Shield, color: "text-tamv-red", bg: "bg-tamv-red/10", border: "border-tamv-red/20", label: "Capa Seguridad", path: "/security" },
+  [MSRDomain.CORE]: { icon: Shield, color: "text-tamv-red", bg: "bg-tamv-red/10", border: "border-tamv-red/20", label: "Capa Core", path: "/security" },
 };
 
 export default function SocialFeed() {
-  const [filter, setFilter] = React.useState<MSRDomain | "ALL">("ALL");
+  const [filters, setFilters] = React.useState({
+    domain: "ALL",
+    source: "ALL",
+    impactType: "ALL",
+    role: "ALL"
+  });
   const [curatedEvents, setCuratedEvents] = React.useState<MSRCard[]>([]);
   const [isCurating, setIsCurating] = React.useState(false);
+
+  // Extract unique values for filters
+  const sources = React.useMemo(() => ["ALL", ...new Set(MOCK_EVENTS.map(e => e.source))], []);
+  const impactTypes = React.useMemo(() => ["ALL", ...new Set(MOCK_EVENTS.map(e => e.impact.type))], []);
+  const roles = React.useMemo(() => ["ALL", ...new Set(MOCK_EVENTS.map(e => e.actor.role))], []);
 
   // Isabella Curation Logic
   React.useEffect(() => {
@@ -134,9 +145,13 @@ export default function SocialFeed() {
     return () => clearTimeout(timer);
   }, []);
 
-  const filteredEvents = filter === "ALL" 
-    ? curatedEvents 
-    : curatedEvents.filter(e => e.domain === filter);
+  const filteredEvents = curatedEvents.filter(e => {
+    const domainMatch = filters.domain === "ALL" || e.domain === filters.domain;
+    const sourceMatch = filters.source === "ALL" || e.source === filters.source;
+    const impactMatch = filters.impactType === "ALL" || e.impact.type === filters.impactType;
+    const roleMatch = filters.role === "ALL" || e.actor.role === filters.role;
+    return domainMatch && sourceMatch && impactMatch && roleMatch;
+  });
 
   // Group by Domain for Segmented View
   const segments = Object.values(MSRDomain).map(domain => ({
@@ -147,61 +162,108 @@ export default function SocialFeed() {
   return (
     <div className="space-y-12">
       {/* High-Level Filters */}
-      <div className="glass-panel p-4 flex flex-wrap items-center gap-4 sticky top-24 z-40 bg-tamv-dark/80 backdrop-blur-xl border border-white/10 shadow-2xl">
-        <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10">
-          <Filter className="w-4 h-4 text-white/40" />
-          <span className="text-[10px] font-mono uppercase tracking-widest text-white/60">Filtros Nexus</span>
+      <div className="glass-panel p-6 space-y-6 sticky top-24 z-40 bg-tamv-dark/90 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-[2rem]">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10">
+            <Filter className="w-4 h-4 text-tamv-blue" />
+            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/80">Filtros de Alta Fidelidad</span>
+          </div>
+          
+          <div className="flex items-center gap-3 text-[10px] font-mono text-white/40 uppercase bg-blue-500/5 px-4 py-2 rounded-full border border-blue-500/10">
+            <AnimatePresence mode="wait">
+              {isCurating ? (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-2"
+                >
+                  <div className="w-2 h-2 rounded-full bg-tamv-blue animate-pulse" />
+                  Sincronizando MSR...
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="ready"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-2"
+                >
+                  <Sparkles className="w-3 h-3 text-tamv-accent" />
+                  Curación Isabella Activa
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
         
-        <div className="flex flex-wrap gap-2">
-          <button 
-            onClick={() => setFilter("ALL")}
-            className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${
-              filter === "ALL" ? "bg-tamv-blue text-tamv-dark shadow-[0_0_15px_rgba(0,163,255,0.3)]" : "bg-white/5 text-white/40 hover:bg-white/10"
-            }`}
-          >
-            Todo
-          </button>
-          {Object.values(MSRDomain).map(domain => (
-            <button 
-              key={domain}
-              onClick={() => setFilter(domain)}
-              className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${
-                filter === domain ? DOMAIN_CONFIG[domain].bg + " " + DOMAIN_CONFIG[domain].color + " border-" + DOMAIN_CONFIG[domain].color.split('-')[1] : "bg-white/5 text-white/40 hover:bg-white/10"
-              }`}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Domain Filter */}
+          <div className="space-y-2">
+            <label className="text-[9px] font-mono uppercase tracking-widest text-white/30 ml-2">Dominio Civilizatorio</label>
+            <select 
+              value={filters.domain}
+              onChange={(e) => setFilters(prev => ({ ...prev, domain: e.target.value }))}
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[11px] text-white/80 focus:outline-none focus:border-tamv-blue/50 transition-all appearance-none cursor-pointer"
             >
-              {domain}
-            </button>
-          ))}
+              <option value="ALL">Todos los Dominios</option>
+              {Object.values(MSRDomain).map(d => <option key={d} value={d}>{d}</option>)}
+            </select>
+          </div>
+
+          {/* Source Filter */}
+          <div className="space-y-2">
+            <label className="text-[9px] font-mono uppercase tracking-widest text-white/30 ml-2">Fuente Federada</label>
+            <select 
+              value={filters.source}
+              onChange={(e) => setFilters(prev => ({ ...prev, source: e.target.value }))}
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[11px] text-white/80 focus:outline-none focus:border-tamv-blue/50 transition-all appearance-none cursor-pointer"
+            >
+              {sources.map(s => <option key={s} value={s}>{s === "ALL" ? "Todas las Fuentes" : s}</option>)}
+            </select>
+          </div>
+
+          {/* Impact Filter */}
+          <div className="space-y-2">
+            <label className="text-[9px] font-mono uppercase tracking-widest text-white/30 ml-2">Tipo de Impacto</label>
+            <select 
+              value={filters.impactType}
+              onChange={(e) => setFilters(prev => ({ ...prev, impactType: e.target.value }))}
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[11px] text-white/80 focus:outline-none focus:border-tamv-blue/50 transition-all appearance-none cursor-pointer"
+            >
+              {impactTypes.map(t => <option key={t} value={t}>{t === "ALL" ? "Todos los Impactos" : t}</option>)}
+            </select>
+          </div>
+
+          {/* Role Filter */}
+          <div className="space-y-2">
+            <label className="text-[9px] font-mono uppercase tracking-widest text-white/30 ml-2">Rol del Actor</label>
+            <select 
+              value={filters.role}
+              onChange={(e) => setFilters(prev => ({ ...prev, role: e.target.value }))}
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-[11px] text-white/80 focus:outline-none focus:border-tamv-blue/50 transition-all appearance-none cursor-pointer"
+            >
+              {roles.map(r => <option key={r} value={r}>{r === "ALL" ? "Todos los Roles" : r}</option>)}
+            </select>
+          </div>
         </div>
 
-        <div className="ml-auto flex items-center gap-3 text-[10px] font-mono text-white/40 uppercase bg-blue-500/5 px-4 py-2 rounded-full border border-blue-500/10">
-          <AnimatePresence mode="wait">
-            {isCurating ? (
-              <motion.div
-                key="loading"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex items-center gap-2"
-              >
-                <div className="w-2 h-2 rounded-full bg-tamv-blue animate-pulse" />
-                Curando contenido...
-              </motion.div>
-            ) : (
-              <motion.div
-                key="ready"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex items-center gap-2"
-              >
-                <Sparkles className="w-3 h-3 text-tamv-accent" />
-                Curación Isabella Activa
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        {/* Active Filter Tags */}
+        {(filters.domain !== "ALL" || filters.source !== "ALL" || filters.impactType !== "ALL" || filters.role !== "ALL") && (
+          <div className="flex flex-wrap gap-2 pt-2 border-t border-white/5">
+            <button 
+              onClick={() => setFilters({ domain: "ALL", source: "ALL", impactType: "ALL", role: "ALL" })}
+              className="px-3 py-1 rounded-lg bg-red-500/10 text-red-400 text-[9px] font-bold uppercase tracking-widest hover:bg-red-500/20 transition-all"
+            >
+              Limpiar Filtros
+            </button>
+            {filters.domain !== "ALL" && <span className="px-3 py-1 rounded-lg bg-tamv-blue/10 text-tamv-blue text-[9px] font-bold uppercase tracking-widest">{filters.domain}</span>}
+            {filters.source !== "ALL" && <span className="px-3 py-1 rounded-lg bg-white/10 text-white/60 text-[9px] font-bold uppercase tracking-widest">{filters.source}</span>}
+            {filters.impactType !== "ALL" && <span className="px-3 py-1 rounded-lg bg-tamv-accent/10 text-tamv-accent text-[9px] font-bold uppercase tracking-widest">{filters.impactType}</span>}
+            {filters.role !== "ALL" && <span className="px-3 py-1 rounded-lg bg-white/10 text-white/60 text-[9px] font-bold uppercase tracking-widest">{filters.role}</span>}
+          </div>
+        )}
       </div>
 
       {/* Segmented Feed */}
@@ -319,7 +381,10 @@ function FederatedCard({ event }: { event: MSRCard }) {
             <div className="flex items-center gap-6">
               <div className="flex flex-col">
                 <span className="text-[9px] font-mono uppercase text-white/30 tracking-widest mb-1">{event.impact.label}</span>
-                <span className="text-xl font-bold text-tamv-blue">{event.impact.value}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold text-tamv-blue">{event.impact.value}</span>
+                  <span className="text-[8px] font-mono text-white/20 uppercase">({event.impact.type})</span>
+                </div>
               </div>
               <div className="w-px h-8 bg-white/10" />
               <div className="flex flex-col">

@@ -22,6 +22,8 @@ interface QuantumLayoutProps {
 
 import SystemStatus from "../SystemStatus";
 
+import TAMVLogo from "../TAMVLogo";
+
 export default function QuantumLayout({ children }: QuantumLayoutProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation();
@@ -63,9 +65,7 @@ export default function QuantumLayout({ children }: QuantumLayoutProps) {
       {/* Header */}
       <header className="sticky top-0 z-50 glass-panel mx-4 mt-4 px-6 py-4 flex items-center justify-between border-b border-tamv-blue/20">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-tamv-blue/20 rounded-lg flex items-center justify-center border border-tamv-blue/30 group-hover:border-tamv-cyan transition-all shadow-[0_0_15px_rgba(0,163,255,0.2)]">
-            <Cpu className="w-6 h-6 text-tamv-blue animate-pulse-soft" />
-          </div>
+          <TAMVLogo className="w-10 h-10" />
           <div className="flex flex-col">
             <span className="font-serif text-xl font-bold tracking-tight text-white group-hover:text-tamv-cyan transition-colors">TAMV ONLINE</span>
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-tamv-blue/70">MSR Civilizational Stack</span>
