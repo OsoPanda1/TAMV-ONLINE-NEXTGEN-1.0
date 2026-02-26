@@ -26,12 +26,19 @@ Nuestro compromiso fundamental, inspirado en la filosofía Rarámuri del **Kóri
 - **Entornos Seguros**: Espacios digitales (DreamSpaces) libres de acoso y discriminación.
 
 ## 🏗️ Arquitectura del Ecosistema: El Códice Kórima
-TAMV se organiza en capas de soberanía y protección:
+TAMV se organiza en capas de soberanía y protección, ahora con un **Core Backend** funcional:
 
-1.  **Núcleo Sentiente (Isabella AI)**: Orquestación neural con propósito ético.
-2.  **Ledger de Confianza (EOCT Blockchain)**: Infraestructura de inmutabilidad y transparencia.
+1.  **Núcleo Sentiente (Isabella AI)**: Orquestación neural con propósito ético, integrada con Gemini 3.1 Pro.
+2.  **Ledger de Confianza (EOCT Blockchain)**: Infraestructura de inmutabilidad y transparencia gestionada por el **MSR API**.
 3.  **Red de Seguridad (Anubis Sentinel)**: Defensa proactiva y monitoreo multisensorial.
 4.  **Interfaz Dimensional (4D Experiences)**: Inmersión sensorial consciente y respetuosa.
+5.  **TAMV Core Server**: Backend en Node.js/Express que gestiona la persistencia de registros MSR y evidencia BookPI.
+
+## 🛠️ Stack Tecnológico
+- **Frontend**: React 19, Vite, Tailwind CSS, Framer Motion.
+- **Backend**: Node.js, Express, TSX.
+- **IA**: Google Gemini 3.1 Pro (via @google/genai).
+- **Persistencia**: Sistema de archivos JSON (MSR & BookPI) con capacidad de escalado a DB.
 
 ## 📚 El Kórima Codex: Documentación con Alma
 La documentación de TAMV no es solo técnica; es un manifiesto de soberanía. Los 8 Dominios de Conocimiento Ético guían cada implementación:

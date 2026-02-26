@@ -129,6 +129,20 @@ export default function KnowledgeSystem() {
             </div>
           </div>
 
+          {/* Real-Time MSR Feed */}
+          <div className="glass-panel p-6 space-y-6">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-xl flex items-center gap-2">
+                <Database className="w-5 h-5 text-tamv-blue" />
+                MSR Live Feed (Master Sovereign Record)
+              </h3>
+              <span className="text-[10px] font-mono text-white/30 uppercase">API: /api/msr</span>
+            </div>
+            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+              <MSRFeed />
+            </div>
+          </div>
+
           {/* Artifacts Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <ArtifactItem title="PrismaRecord" icon={<FileCheck className="w-5 h-5" />} />
@@ -137,6 +151,59 @@ export default function KnowledgeSystem() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function MSRFeed() {
+  const [records, setRecords] = React.useState<any[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchRecords = async () => {
+      try {
+        const response = await fetch("/api/msr");
+        if (response.ok) {
+          const data = await response.json();
+          setRecords(data.reverse()); // Show newest first
+        }
+      } catch (e) {
+        console.error("Failed to fetch MSR records:", e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRecords();
+    const interval = setInterval(fetchRecords, 5000); // Poll every 5s
+    return () => clearInterval(interval);
+  }, []);
+
+  if (isLoading) {
+    return <div className="text-center py-8 text-white/20 font-mono text-xs uppercase animate-pulse">Sincronizando con Ledger...</div>;
+  }
+
+  if (records.length === 0) {
+    return <div className="text-center py-8 text-white/20 font-mono text-xs uppercase">No hay registros en el Ledger Soberano.</div>;
+  }
+
+  return (
+    <div className="space-y-3">
+      {records.map((record) => (
+        <div key={record.id} className="p-3 bg-white/5 border border-white/5 rounded-lg font-mono text-[10px] space-y-2">
+          <div className="flex justify-between items-center">
+            <span className="text-tamv-blue">[{record.type}]</span>
+            <span className="text-white/20">{new Date(record.timestamp).toLocaleTimeString()}</span>
+          </div>
+          <div className="text-white/60 truncate">ID: {record.id}</div>
+          <div className="text-white/40 italic">"{record.input?.substring(0, 50)}..."</div>
+          <div className="flex gap-2">
+            {record.agents?.map((agent: string) => (
+              <span key={agent} className="bg-tamv-blue/10 text-tamv-blue px-1 rounded-[2px]">{agent}</span>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

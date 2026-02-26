@@ -78,6 +78,25 @@ export class IsabellaMatriz {
     // 7. Deactivate Agents
     vault.deactivateAll();
 
+    // 8. Log to MSR API (Backend Persistence)
+    try {
+      await fetch("/api/msr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "ISABELLA_INTERACTION",
+          requestId: request.id,
+          domain: targetDomain,
+          agents: activeAgents,
+          input: request.input,
+          output: finalResponse.output,
+          flags: finalResponse.flags
+        })
+      });
+    } catch (e) {
+      console.error("[ISA-MATRIZ] Failed to log to MSR API:", e);
+    }
+
     return {
       ...finalResponse,
       agentsUsed: activeAgents,
