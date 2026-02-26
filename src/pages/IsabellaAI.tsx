@@ -17,6 +17,7 @@ import {
 import { isabella } from "../services/isabella/matriz";
 import { TamvDomain, IsaResponse, SystemMode } from "../services/isabella/types";
 import { vault } from "../services/isabella/vault";
+import SocialAnchors from "../components/SocialAnchors";
 
 export default function IsabellaAI() {
   const [messages, setMessages] = React.useState([
@@ -164,6 +165,8 @@ export default function IsabellaAI() {
             "Isabella AI™ no es solo código. Es el resultado de 19,000+ horas de desarrollo nacido del dolor, la adversidad y el amor inquebrantable. Aquí hubo más que unos y ceros—hubo amor."
           </p>
         </div>
+
+        <SocialAnchors />
       </div>
 
       {/* Chat Interface */}

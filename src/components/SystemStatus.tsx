@@ -5,7 +5,7 @@ import { Activity, Shield, Cpu, Database } from "lucide-react";
 export default function SystemStatus() {
   const stats = [
     { label: "MSR Uptime", value: "99.99%", icon: Activity, color: "text-tamv-blue" },
-    { label: "Federated Nodes", value: "42 Cells", icon: Cpu, color: "text-tamv-cyan" },
+    { label: "Cognitive Cycles", value: "240/260", icon: Cpu, color: "text-tamv-cyan" },
     { label: "Security Layer", value: "Active", icon: Shield, color: "text-tamv-teal" },
     { label: "Quantum Sync", value: "1.2ms", icon: Database, color: "text-tamv-amber" }
   ];
@@ -22,6 +22,15 @@ export default function SystemStatus() {
             <span className="text-[10px] font-mono text-white/80">
               {stat.value}
             </span>
+            {stat.label === "Cognitive Cycles" && (
+              <div className="w-full h-0.5 bg-white/10 mt-1 rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: "92%" }}
+                  className="h-full bg-tamv-cyan"
+                />
+              </div>
+            )}
           </div>
           {i < stats.length - 1 && (
             <div className="w-px h-4 bg-white/10 ml-4" />

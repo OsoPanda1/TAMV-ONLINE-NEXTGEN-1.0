@@ -7,7 +7,11 @@ import {
   Award,
   ExternalLink,
   ChevronRight,
-  Database
+  Database,
+  Shield,
+  Cpu,
+  Terminal,
+  FileText
 } from "lucide-react";
 
 export default function KnowledgeSystem() {
@@ -19,25 +23,42 @@ export default function KnowledgeSystem() {
           <h1 className="text-4xl font-serif">PRISMA Knowledge System</h1>
         </div>
         <p className="text-xl text-white/70 max-w-3xl font-light">
-          Metodología de validación civilizatoria. Transformando la innovación en evidencia inmutable y conocimiento compartido.
+          Metodología de validación civilizatoria. Transformando la innovación en evidencia inmutable y conocimiento compartido bajo el **Master Canon v0.1**.
         </p>
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Sidebar Steps */}
-        <div className="lg:col-span-1 space-y-4">
-          {[
-            { step: "01", title: "Definición del Claim", desc: "¿Qué paradigma se rompe?" },
-            { step: "02", title: "Búsqueda Sistemática", desc: "Patentes, papers y estándares." },
-            { step: "03", title: "Selección y Síntesis", desc: "Matriz de calidad y riesgo." },
-            { step: "04", title: "Generación de Artefactos", desc: "PrismaRecord y BookPI." },
-          ].map((item, i) => (
-            <div key={item.step} className="p-4 border border-white/10 rounded-xl hover:border-tamv-blue transition-all group cursor-pointer">
-              <span className="text-[10px] font-mono text-tamv-blue mb-1 block">{item.step}</span>
-              <h4 className="font-serif text-lg mb-1 group-hover:text-tamv-blue transition-colors">{item.title}</h4>
-              <p className="text-xs text-white/40">{item.desc}</p>
-            </div>
-          ))}
+        {/* Sidebar Steps & Master Canon */}
+        <div className="lg:col-span-1 space-y-6">
+          <div className="p-6 bg-tamv-blue/5 border border-tamv-blue/20 rounded-2xl">
+            <h3 className="text-xs font-mono uppercase tracking-widest text-tamv-blue mb-4 flex items-center gap-2">
+              <Shield className="w-3 h-3" />
+              Master Canon v0.1
+            </h3>
+            <p className="text-[10px] text-white/50 leading-relaxed mb-4">
+              Documento operativo canónico vinculante para agentes OpenClaw. Define alcance, límites y módulos operativos A–J.
+            </p>
+            <button className="w-full py-2 bg-tamv-blue/10 border border-tamv-blue/30 rounded-lg text-[10px] font-bold uppercase tracking-widest text-tamv-blue hover:bg-tamv-blue hover:text-tamv-dark transition-all flex items-center justify-center gap-2">
+              <FileText className="w-3 h-3" />
+              Ver Canon Completo
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="text-[10px] font-mono uppercase tracking-widest text-white/30 px-2">Módulos Operativos A–J</h4>
+            {[
+              { step: "A-C", title: "Ingestión y Cartografía", desc: "Mapeo de claims y literatura." },
+              { step: "D-F", title: "Validación Cruzada", desc: "Contraste con estándares globales." },
+              { step: "G-I", title: "Generación de Artefactos", desc: "Producción de BookPI y PrismaRecord." },
+              { step: "J", title: "Sellado Criptográfico", desc: "Snapshot final y hash SHA-256." },
+            ].map((item, i) => (
+              <div key={item.step} className="p-4 border border-white/10 rounded-xl hover:border-tamv-blue transition-all group cursor-pointer">
+                <span className="text-[10px] font-mono text-tamv-blue mb-1 block">{item.step}</span>
+                <h4 className="font-serif text-lg mb-1 group-hover:text-tamv-blue transition-colors">{item.title}</h4>
+                <p className="text-xs text-white/40">{item.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Main Content Area */}
@@ -48,12 +69,18 @@ export default function KnowledgeSystem() {
             </div>
             
             <div className="relative z-10 space-y-8">
-              <div className="space-y-4">
-                <h2 className="text-3xl font-serif">Muro de Reconocimientos</h2>
-                <p className="text-white/60 leading-relaxed">
-                  Interfaz tipo museo donde cada logro se muestra como un "cuadro" documentado, 
-                  listo para el escrutinio de cualquier tribunal técnico o académico honesto.
-                </p>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-4">
+                  <h2 className="text-3xl font-serif">Muro de Reconocimientos</h2>
+                  <p className="text-white/60 leading-relaxed max-w-xl">
+                    Interfaz tipo museo donde cada logro se muestra como un "cuadro" documentado bajo la métrica de **Ciclos Cognitivos de IA**.
+                  </p>
+                </div>
+                <div className="p-4 bg-white/5 border border-white/10 rounded-2xl text-center min-w-[160px]">
+                  <div className="text-2xl font-bold font-mono text-tamv-blue">220</div>
+                  <div className="text-[8px] font-mono uppercase tracking-widest text-white/30">Ciclos IA Consumidos</div>
+                  <div className="mt-2 text-[10px] text-tamv-teal font-mono">V0.1 COMPLETADA</div>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -82,6 +109,23 @@ export default function KnowledgeSystem() {
                   evidence="5 Fuentes"
                 />
               </div>
+            </div>
+          </div>
+
+          {/* OpenClaw Agent Status */}
+          <div className="glass-panel p-6 border-l-4 border-tamv-blue flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-tamv-blue/10">
+                <Terminal className="w-6 h-6 text-tamv-blue" />
+              </div>
+              <div>
+                <h4 className="font-bold">Agente OpenClaw Activo</h4>
+                <p className="text-xs text-white/40">Rol: Compilador y Cartógrafo Documental</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] font-mono text-emerald-500 uppercase tracking-widest">Sincronizado con Master Canon</span>
             </div>
           </div>
 

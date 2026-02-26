@@ -78,16 +78,18 @@ export default function QuantumLayout({ children }: QuantumLayoutProps) {
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-8">
           <SystemStatus />
-          <nav className="flex items-center gap-8">
+          <nav className="flex items-center gap-1 p-1 bg-white/5 border border-white/10 rounded-2xl">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-2 text-sm font-medium transition-all hover:text-tamv-cyan hover:translate-y-[-1px] ${
-                  location.pathname === item.path ? "text-tamv-cyan" : "text-white/70"
+                className={`flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-widest transition-all rounded-xl ${
+                  location.pathname === item.path 
+                    ? "bg-tamv-blue text-tamv-dark shadow-[0_0_15px_rgba(0,163,255,0.3)]" 
+                    : "text-white/50 hover:text-white hover:bg-white/5"
                 }`}
               >
-                <item.icon className={`w-4 h-4 ${location.pathname === item.path ? "text-tamv-cyan" : "text-white/30"}`} />
+                <item.icon className={`w-3.5 h-3.5 ${location.pathname === item.path ? "text-tamv-dark" : "text-tamv-blue/50"}`} />
                 {item.name}
               </Link>
             ))}
@@ -170,6 +172,11 @@ export default function QuantumLayout({ children }: QuantumLayoutProps) {
             <p className="text-sm text-white/50 leading-relaxed">
               Infraestructura digital soberana diseñada para la dignidad humana y la reclamación histórica de récords tecnológicos.
             </p>
+            <div className="flex items-center gap-4 mt-2">
+              <a href="https://x.com/tamv_online" target="_blank" className="text-white/30 hover:text-tamv-blue transition-colors"><Globe className="w-4 h-4" /></a>
+              <a href="https://linkedin.com/company/tamv" target="_blank" className="text-white/30 hover:text-tamv-blue transition-colors"><Layers className="w-4 h-4" /></a>
+              <a href="https://youtube.com/@tamv_online" target="_blank" className="text-white/30 hover:text-tamv-blue transition-colors"><Cpu className="w-4 h-4" /></a>
+            </div>
           </div>
           
           <div className="flex flex-col gap-4">
@@ -177,7 +184,7 @@ export default function QuantumLayout({ children }: QuantumLayoutProps) {
             <ul className="text-sm text-white/70 space-y-2">
               <li className="flex items-center gap-2"><Zap className="w-3 h-3 text-tamv-accent" /> Protocolo Fénix</li>
               <li className="flex items-center gap-2"><Zap className="w-3 h-3 text-tamv-accent" /> Protocolo Iniciación</li>
-              <li className="flex items-center gap-2"><Zap className="w-3 h-3 text-tamv-accent" /> Protocolo Hoyo Negro</li>
+              <li className="flex items-center gap-2"><Zap className="w-3 h-3 text-tamv-accent" /> Master Canon v0.1</li>
             </ul>
           </div>
 
