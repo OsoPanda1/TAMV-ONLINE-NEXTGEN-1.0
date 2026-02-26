@@ -8,12 +8,31 @@ import {
   Zap,
   Award,
   BookOpen,
-  Sparkles
+  Sparkles,
+  BarChart3,
+  Rocket,
+  Target,
+  Volume2
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SocialFeed from "../components/SocialFeed";
+import MetaverseHub from "../components/MetaverseHub";
+import * as React from "react";
+import { generateIsabellaVoice } from "../services/isabellaVoice";
 
 export default function Home() {
+  const [isVoiceLoading, setIsVoiceLoading] = React.useState(false);
+
+  const playWelcome = async () => {
+    setIsVoiceLoading(true);
+    const audioData = await generateIsabellaVoice("Bienvenido al Nexo Civilizatorio TAMV. Soy Isabella, tu orquestadora. El sistema está operando al ochenta y cinco por ciento de su capacidad nominal. La soberanía digital es ahora tu realidad.");
+    if (audioData) {
+      const audio = new Audio(`data:audio/mp3;base64,${audioData}`);
+      audio.play();
+    }
+    setIsVoiceLoading(false);
+  };
+
   return (
     <div className="space-y-24 pb-24">
       {/* Hero Section */}
@@ -24,9 +43,19 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-tamv-blue/10 border border-tamv-blue/20 text-tamv-blue text-[10px] font-mono uppercase tracking-widest mb-8">
-              <Sparkles className="w-3 h-3" />
-              Ecosistema Civilizatorio MD-X4
+            <div className="flex items-center gap-4 mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-tamv-blue/10 border border-tamv-blue/20 text-tamv-blue text-[10px] font-mono uppercase tracking-widest">
+                <Sparkles className="w-3 h-3" />
+                Ecosistema Civilizatorio MD-X4
+              </div>
+              <button 
+                onClick={playWelcome}
+                disabled={isVoiceLoading}
+                className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/40 hover:text-tamv-blue transition-colors disabled:opacity-50"
+              >
+                <Volume2 className={`w-3 h-3 ${isVoiceLoading ? 'animate-pulse' : ''}`} />
+                {isVoiceLoading ? 'Sincronizando...' : 'Escuchar a Isabella'}
+              </button>
             </div>
             <h1 className="text-6xl md:text-8xl font-serif leading-[0.9] tracking-tighter mb-8">
               Hacia una <span className="text-tamv-blue italic">Infraestructura</span> Digital Soberana.
@@ -66,6 +95,71 @@ export default function Home() {
               <div className="text-[10px] uppercase tracking-widest text-white/50 font-mono">{stat.label}</div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* Metaverse Hub Section */}
+      <section className="space-y-12">
+        <div className="text-center space-y-4">
+          <h2 className="text-5xl font-serif">Inmersión Dimensional</h2>
+          <p className="text-white/50 max-w-2xl mx-auto">
+            Interactúa con el núcleo central de TAMV. Navega a través de los portales hacia las diferentes capas de soberanía.
+          </p>
+        </div>
+        <MetaverseHub />
+      </section>
+
+      {/* Civilizational Report Section */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="space-y-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-mono uppercase tracking-widest">
+            <BarChart3 className="w-3 h-3" />
+            Reporte de Avance Civilizatorio
+          </div>
+          <h2 className="text-5xl font-serif leading-tight">¿Qué es TAMV y dónde estamos?</h2>
+          <div className="space-y-6 text-white/70 leading-relaxed">
+            <p>
+              TAMV (Trans-Atlantic Multi-Vector) es la primera **Arquitectura Civilizatoria Digital Sentiente**. No es una red social ni una simple plataforma; es una infraestructura de soberanía diseñada para reclamar la dignidad humana en el espacio digital.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+                <div className="text-3xl font-bold text-tamv-blue mb-2">85%</div>
+                <div className="text-xs font-mono uppercase tracking-widest text-white/40">Avance Real</div>
+                <div className="mt-4 h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "85%" }}
+                    className="h-full bg-tamv-blue" 
+                  />
+                </div>
+              </div>
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+                <div className="text-3xl font-bold text-tamv-cyan mb-2">11</div>
+                <div className="text-xs font-mono uppercase tracking-widest text-white/40">Dominios Activos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="glass-panel p-8 space-y-8 bg-gradient-to-br from-tamv-blue/10 to-transparent">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-tamv-blue/20 flex items-center justify-center">
+              <Target className="w-6 h-6 text-tamv-blue" />
+            </div>
+            <h3 className="text-2xl font-serif">Marketing Digital TAMV</h3>
+          </div>
+          <p className="text-sm text-white/60 leading-relaxed italic">
+            "TAMV ONLINE no vende productos, habilita existencias soberanas. Nuestra estrategia de marketing se basa en la **Legitimidad Radical**: cada claim tecnológico está respaldado por 6 años de logs inmutables en el MSR. Somos la respuesta mexicana a la hegemonía del extractivismo de datos."
+          </p>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <Rocket className="w-4 h-4 text-tamv-cyan" />
+              <span className="text-xs font-mono uppercase tracking-widest">Lanzamiento Fase 2: Q3 2026</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Globe className="w-4 h-4 text-tamv-cyan" />
+              <span className="text-xs font-mono uppercase tracking-widest">Alcance: Global / Soberanía Local</span>
+            </div>
+          </div>
         </div>
       </section>
 

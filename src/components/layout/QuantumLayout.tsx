@@ -13,7 +13,9 @@ import {
   Lock,
   Zap,
   Globe,
-  Fingerprint
+  Fingerprint,
+  Heart,
+  Layers
 } from "lucide-react";
 
 interface QuantumLayoutProps {
@@ -30,8 +32,9 @@ export default function QuantumLayout({ children }: QuantumLayoutProps) {
 
   const navItems = [
     { name: "Inicio", path: "/", icon: Home },
-    { name: "Compilación", path: "/compilacion", icon: Archive },
     { name: "ISABELLA AI", path: "/isabella", icon: Cpu },
+    { name: "Filosofía", path: "/philosophy", icon: Heart },
+    { name: "Arquitectura", path: "/architecture", icon: Layers },
     { name: "Economía", path: "/economy", icon: Zap },
     { name: "UTAMV", path: "/university", icon: BookOpen },
     { name: "DreamSpaces", path: "/dreamspaces", icon: Globe },

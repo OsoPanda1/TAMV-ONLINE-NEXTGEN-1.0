@@ -21,6 +21,11 @@ import QuantumEconomy from "./pages/QuantumEconomy";
 import UTAMV from "./pages/UTAMV";
 import DreamSpaces from "./pages/DreamSpaces";
 import Governance from "./pages/Governance";
+import Philosophy from "./pages/Philosophy";
+import Architecture from "./pages/Architecture";
+import UseCases from "./pages/UseCases";
+import Roadmap from "./pages/Roadmap";
+import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -72,6 +77,11 @@ export default function App() {
                 <Route path="/university" element={<UTAMV />} />
                 <Route path="/dreamspaces" element={<DreamSpaces />} />
                 <Route path="/governance" element={<Governance />} />
+                <Route path="/philosophy" element={<Philosophy />} />
+                <Route path="/architecture" element={<Architecture />} />
+                <Route path="/use-cases" element={<UseCases />} />
+                <Route path="/roadmap" element={<Roadmap />} />
+                <Route path="/blog" element={<Blog />} />
                 
                 {/* Genesis Digytamv Nexus Routes */}
                 <Route path="/documentation" element={<KnowledgeSystem />} />

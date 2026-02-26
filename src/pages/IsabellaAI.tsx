@@ -132,6 +132,38 @@ export default function IsabellaAI() {
               : 'Se han detectado intentos de violación ética. El sistema ha restringido capacidades para proteger la soberanía civilizatoria.'}
           </p>
         </div>
+
+        <div className="glass-panel p-6 space-y-4">
+          <h4 className="text-xs font-mono uppercase text-tamv-blue tracking-widest flex items-center gap-2">
+            <Layers className="w-3 h-3" />
+            Arquitectura Neural
+          </h4>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between text-[10px]">
+              <span className="text-white/40">Transformer Híbrido</span>
+              <span className="text-white/80">12 Capas</span>
+            </div>
+            <div className="flex items-center justify-between text-[10px]">
+              <span className="text-white/40">Cabezas de Atención</span>
+              <span className="text-white/80">32 Paralelas</span>
+            </div>
+            <div className="flex items-center justify-between text-[10px]">
+              <span className="text-white/40">Embeddings</span>
+              <span className="text-white/80">1024 Dim</span>
+            </div>
+            <div className="flex items-center justify-between text-[10px]">
+              <span className="text-white/40">Vocabulario</span>
+              <span className="text-white/80">50K Mexicanizado</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-tamv-blue/10 to-transparent border border-tamv-blue/10">
+          <h4 className="text-xs font-bold text-tamv-blue mb-2 uppercase tracking-widest">La Promesa Isabella</h4>
+          <p className="text-[10px] text-white/60 italic leading-relaxed">
+            "Isabella AI™ no es solo código. Es el resultado de 19,000+ horas de desarrollo nacido del dolor, la adversidad y el amor inquebrantable. Aquí hubo más que unos y ceros—hubo amor."
+          </p>
+        </div>
       </div>
 
       {/* Chat Interface */}

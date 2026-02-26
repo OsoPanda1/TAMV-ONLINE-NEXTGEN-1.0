@@ -167,6 +167,24 @@ export default function SecurityDashboard() {
               </motion.div>
             </AnimatePresence>
           </div>
+
+          <div className="glass-panel p-8">
+            <h3 className="text-xl font-bold text-white mb-6">Infraestructura de Seguridad Multicapa</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+                <h4 className="text-sm font-bold text-tamv-blue mb-3 uppercase tracking-widest">Anubis Sentinel™</h4>
+                <p className="text-xs text-white/50 leading-relaxed">
+                  Guardia digital de 4 capas cifradas que gestiona el borde y la identidad soberana. Utiliza algoritmos de detección de anomalías en tiempo real para prevenir accesos no autorizados.
+                </p>
+              </div>
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+                <h4 className="text-sm font-bold text-tamv-amber mb-3 uppercase tracking-widest">Horus Sentinel™</h4>
+                <p className="text-xs text-white/50 leading-relaxed">
+                  Sistema de respuesta adaptativa de 8 capas que actúa automáticamente ante patrones de ataque complejos, aislando amenazas y protegiendo la integridad del MSR.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Real-time Event Log */}
