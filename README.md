@@ -37,12 +37,12 @@ TAMV se organiza en capas de soberanía y protección:
 La documentación de TAMV no es solo técnica; es un manifiesto de soberanía. Los 8 Dominios de Conocimiento Ético guían cada implementación:
 - **T-Social**: Conexión humana auténtica.
 - **T-Learn**: Educación transformadora (UTAMV).
-- **T-Economy**: Intercambio de valor justo.
+- **T-Economy**: Intercambio de valor justo bajo el **TAMV Economic Engine (TEE)**.
 - **T-Gov**: Gobernanza líquida y transparente.
 - **T-XR**: Realidades extendidas con propósito.
 - **T-AI**: Inteligencia artificial al servicio de la vida.
-- **T-Core**: Infraestructura soberana.
-- **T-Impact**: Medición del florecimiento humano.
+- **T-Core**: Infraestructura soberana y **Master Canon v0.1**.
+- **T-Impact**: Medición del florecimiento humano y **Fair Split Algorithm**.
 
 ## 👤 Fundador: Edwin Oswaldo Castillo Trejo (Edwin Anubis)
 
